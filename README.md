@@ -1,109 +1,76 @@
-# RE Investment Copilot - Claude Code Starter Kit
+# RE Investment Copilot
 
-## What's In This Kit
+Professional investment memo generator for residential rental properties. Get IRR calculations, sensitivity analysis, and a clear verdict (Buy, Pass, or Watch) in under 5 minutes.
 
-This starter kit contains everything you need to begin building with Claude Code:
+## Features
+
+- **Deterministic Financial Model** - IRR, cash flow, tax effects (depreciation, capital gains, recapture)
+- **Multi-Horizon Analysis** - 5, 7, and 10-year exit scenarios
+- **Sensitivity Analysis** - Rent, appreciation, and vacancy stress testing
+- **REIT Comparison** - Benchmark against passive investing
+- **AI Narrative** - Claude-generated insights (numbers are never AI-generated)
+- **PDF/Markdown Export** - Professional memos for partners and lenders
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router) + TypeScript
+- **Database**: Supabase (PostgreSQL)
+- **Auth**: Supabase Auth
+- **AI**: Claude API (narrative only)
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Testing**: Vitest + React Testing Library
+
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Add your Supabase and Anthropic API keys
+
+# Run database migrations (see docs/migrations/)
+
+# Start development server
+npm run dev
+```
+
+Visit http://localhost:3000
+
+## Scripts
+
+```bash
+npm run dev        # Start dev server
+npm run build      # Production build
+npm run test       # Run tests (220 tests)
+npm run typecheck  # TypeScript check
+npm run lint       # ESLint
+```
+
+## Project Structure
 
 ```
-re-copilot-starter-kit/
-├── CLAUDE.md           # Project instructions for Claude Code
-├── QUICKSTART.md       # Step-by-step build guide
-├── README.md           # This file
-└── docs/
-    ├── PRD.md          # Enhanced product requirements
-    ├── TECHNICAL.md    # Calculations, schema, API spec
-    └── PROMPTS.md      # AI prompt templates
+src/
+├── app/                 # Next.js pages and API routes
+├── components/          # React components
+│   ├── landing/         # Landing page sections
+│   ├── memo/            # Investment memo display
+│   └── ui/              # shadcn components
+├── lib/
+│   ├── model/           # Financial calculations (core)
+│   ├── ai/              # Claude integration
+│   └── db/              # Supabase client
+├── types/               # TypeScript interfaces
+└── config/              # Default assumptions
 ```
 
-## How to Use This Kit
+## Documentation
 
-1. **Create your project directory** and copy these files into it
-2. **Place CLAUDE.md in the root** - Claude Code reads this automatically
-3. **Place docs/ folder** with PRD, TECHNICAL, and PROMPTS
-4. **Follow QUICKSTART.md** for day-by-day build instructions
+- `docs/PRD.md` - Product requirements
+- `docs/TECHNICAL.md` - Calculation formulas, database schema
+- `docs/PROMPTS.md` - AI prompt templates
 
-## Changes Made to Your Original PRD
+## License
 
-Your original PRD was excellent. Here's what was added to make it build-ready:
-
-### Added: Data Model (Section 6)
-- Complete TypeScript interfaces for `Deal`, `GlobalAssumptions`, `ModelOutput`
-- Detailed structure for `YearResult`, `HorizonResult`, `SensitivityResult`
-- This gives Claude Code exact types to implement
-
-### Added: API Routes (Section 7)
-- RESTful endpoints for deals CRUD
-- Analyze endpoint specification
-- Export endpoints for PDF/Markdown
-
-### Added: Pricing Model (Section 10)
-- Three pricing options with specific numbers
-- Helps inform paywall implementation
-
-### Added: Technical Specification (New File)
-- **Calculation Formulas**: Every formula written out explicitly
-  - Amortization
-  - Cash flow (year by year)
-  - Tax calculations (depreciation, capital gains)
-  - IRR (Newton-Raphson method)
-  - Sensitivity analysis methodology
-- **Database Schema**: Complete SQL for Supabase with RLS
-- **Testing Requirements**: Unit test examples with expected values
-- **Error Handling**: Validation rules and edge cases
-
-### Added: Enhanced Prompts (New File)
-- System prompt with explicit rules (never generate numbers)
-- User prompt template with all variable placeholders
-- Verdict logic prompt (decision framework)
-- Comparison prompt for multi-deal analysis
-- Data gap assessment prompt
-- Risk notes prompt
-
-### Added: CLAUDE.md (New File)
-- Project overview and principles
-- Tech stack decisions
-- Directory structure
-- Development workflow
-- Critical rules (deterministic model, testing)
-
-### Added: Quick Start Guide (New File)
-- Pre-flight checklist
-- Day-by-day build instructions
-- Specific Claude Code prompts to use
-- Tips for solo building
-
-## What Was NOT Changed
-
-Your core PRD decisions were kept intact:
-- Deterministic model principle
-- Output contract (7 sections)
-- Default assumptions
-- User flows
-- Success metrics
-- Non-functional requirements
-- Future considerations
-
-These were good decisions that didn't need modification.
-
-## Recommended Build Order
-
-1. **Week 1**: Financial model engine (the math)
-2. **Week 2**: Database + input forms
-3. **Week 3**: Memo generation + display
-4. **Week 4**: AI narrative + export
-5. **Week 5**: Payments + polish + launch
-
-## Key Success Factors
-
-1. **Get the math right first** - Test IRR against Excel before anything else
-2. **AI is for narrative only** - Never let it generate numbers
-3. **Test obsessively** - Unit tests are your safety net
-4. **Ship ugly, then polish** - Working > pretty
-
-## Questions?
-
-If you get stuck, the most useful approach in Claude Code is:
-
-> "I'm implementing [X] from docs/TECHNICAL.md. Here's my current code: [paste]. It's not working because [symptom]. Expected behavior is [Y]. Help me fix it."
-
-Good luck building! 🏠📊
+MIT
