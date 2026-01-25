@@ -1,0 +1,13 @@
+export { Header } from "./Header";
+export { Hero } from "./Hero";
+export { TrustStrip } from "./TrustStrip";
+export { ProblemSection } from "./ProblemSection";
+export { SolutionSection } from "./SolutionSection";
+export { HowItWorks } from "./HowItWorks";
+export { Features } from "./Features";
+export { Testimonials } from "./Testimonials";
+export { OutputPreview } from "./OutputPreview";
+export { Pricing } from "./Pricing";
+export { FAQ } from "./FAQ";
+export { FinalCTA } from "./FinalCTA";
+export { Footer } from "./Footer";
