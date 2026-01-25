@@ -52,8 +52,8 @@ export default function DealsPage() {
   const [error, setError] = useState<string | null>(null);
 
   // Filters
-  const [selectedTag, setSelectedTag] = useState<string>('');
-  const [selectedStatus, setSelectedStatus] = useState<string>('');
+  const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [availableTags, setAvailableTags] = useState<string[]>([]);
 
   // Portfolio summary
@@ -97,8 +97,8 @@ export default function DealsPage() {
     try {
       setIsLoading(true);
       const params = new URLSearchParams();
-      if (selectedTag) params.append('marketTag', selectedTag);
-      if (selectedStatus) params.append('status', selectedStatus);
+      if (selectedTag && selectedTag !== 'all') params.append('marketTag', selectedTag);
+      if (selectedStatus && selectedStatus !== 'all') params.append('status', selectedStatus);
 
       const response = await fetch(`/api/deals?${params.toString()}`);
       if (!response.ok) {
@@ -345,7 +345,7 @@ export default function DealsPage() {
               <SelectValue placeholder="All Tags" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Tags</SelectItem>
+              <SelectItem value="all">All Tags</SelectItem>
               {/* Show preset tags that exist in the user's deals */}
               {PRESET_MARKET_TAGS.filter(tag => availableTags.includes(tag)).map((tag) => (
                 <SelectItem key={tag} value={tag}>
@@ -369,20 +369,20 @@ export default function DealsPage() {
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Status</SelectItem>
+              <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="draft">Draft</SelectItem>
               <SelectItem value="analyzed">Analyzed</SelectItem>
               <SelectItem value="archived">Archived</SelectItem>
             </SelectContent>
           </Select>
         </div>
-        {(selectedTag || selectedStatus) && (
+        {(selectedTag !== 'all' || selectedStatus !== 'all') && (
           <Button
             variant="ghost"
             size="sm"
             onClick={() => {
-              setSelectedTag('');
-              setSelectedStatus('');
+              setSelectedTag('all');
+              setSelectedStatus('all');
             }}
           >
             Clear Filters
@@ -394,7 +394,7 @@ export default function DealsPage() {
       {deals.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            {selectedTag || selectedStatus ? (
+            {selectedTag !== 'all' || selectedStatus !== 'all' ? (
               <p className="text-gray-500 mb-4">No deals match your filters.</p>
             ) : (
               <>
