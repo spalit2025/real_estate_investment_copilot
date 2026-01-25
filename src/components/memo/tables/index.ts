@@ -1,0 +1,1 @@
+export { YearByYearTable } from './YearByYearTable';
