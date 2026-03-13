@@ -19,6 +19,9 @@ export const DEFAULT_ASSUMPTIONS: GlobalAssumptions = {
   // Capital Gains
   capitalGainsRate: 0.15, // 15% federal long-term capital gains
   deprecationRecaptureRate: 0.25, // 25% depreciation recapture rate
+
+  // Passive Loss
+  passiveLossUsable: true, // Assumes AGI under $150K threshold
 };
 
 /**
