@@ -54,6 +54,7 @@ export interface Deal {
   isRentControlled: boolean;
   hasHOARentalLimit: boolean;
   knownCapex: string; // Description of known issues
+  passiveLossOverride?: boolean; // Override global passive loss setting for this deal
 
   // Overrides for global assumptions
   assumptionOverrides: Partial<GlobalAssumptions>;
@@ -96,6 +97,7 @@ export interface GlobalAssumptions {
   landValuePct: number; // e.g., 0.20 for 20%
   capitalGainsRate: number; // e.g., 0.15 for 15%
   deprecationRecaptureRate: number; // e.g., 0.25 for 25%
+  passiveLossUsable: boolean; // Can passive losses offset other income?
 }
 
 /**
