@@ -1,6 +1,11 @@
 import type { GlobalAssumptions, Deal } from '@/types';
 
 /**
+ * Demo user ID for open-source portfolio version (no auth)
+ */
+export const DEMO_USER_ID = 'demo-user-00000000';
+
+/**
  * Global default assumptions for financial modeling
  * These can be overridden at the deal level via assumptionOverrides
  */

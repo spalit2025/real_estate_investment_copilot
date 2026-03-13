@@ -19,22 +19,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const { id } = await params;
     const supabase = await createServerClient();
 
-    // Get current user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Get deal
     const deal = await getDeal(supabase, id);
 
     if (!deal) {
       return NextResponse.json({ error: 'Deal not found' }, { status: 404 });
-    }
-
-    // Check ownership
-    if (deal.userId !== user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     return NextResponse.json(deal);
@@ -52,19 +41,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     const { id } = await params;
     const supabase = await createServerClient();
 
-    // Get current user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Check deal exists and user owns it
+    // Check deal exists
     const existing = await getDeal(supabase, id);
     if (!existing) {
       return NextResponse.json({ error: 'Deal not found' }, { status: 404 });
-    }
-    if (existing.userId !== user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     // Parse and validate request body
@@ -96,19 +76,10 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     const { id } = await params;
     const supabase = await createServerClient();
 
-    // Get current user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Check deal exists and user owns it
+    // Check deal exists
     const existing = await getDeal(supabase, id);
     if (!existing) {
       return NextResponse.json({ error: 'Deal not found' }, { status: 404 });
-    }
-    if (existing.userId !== user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     // Check for hard delete query param

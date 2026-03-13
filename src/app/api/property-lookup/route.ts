@@ -5,7 +5,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { lookupPropertyData, mapPropertyType } from '@/lib/api/realty-in-us';
-import { createServerClient } from '@/lib/db/server-client';
 
 export interface PropertyLookupResponse {
   success: boolean;
@@ -38,17 +37,6 @@ export interface PropertyLookupResponse {
 }
 
 export async function GET(request: NextRequest) {
-  // Check authentication
-  const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
-
   // Get address from query params
   const searchParams = request.nextUrl.searchParams;
   const address = searchParams.get('address');

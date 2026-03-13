@@ -6,18 +6,13 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/db/server-client';
 import { getPortfolioSummary } from '@/lib/db/deals';
+import { DEMO_USER_ID } from '@/config/defaults';
 
 export async function GET() {
   try {
     const supabase = await createServerClient();
 
-    // Get current user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const summary = await getPortfolioSummary(supabase, user.id);
+    const summary = await getPortfolioSummary(supabase, DEMO_USER_ID);
 
     return NextResponse.json({ summary });
   } catch (error) {

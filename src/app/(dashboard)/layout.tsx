@@ -1,9 +1,7 @@
 /**
- * Dashboard layout - layout for authenticated pages
+ * Dashboard layout - layout for app pages
  */
 
-import { getCurrentUser } from '@/lib/auth';
-import { redirect } from 'next/navigation';
 import { DashboardNav } from '@/components/dashboard/DashboardNav';
 
 export default async function DashboardLayout({
@@ -11,15 +9,9 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect('/login');
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardNav user={user} />
+      <DashboardNav />
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {children}
       </main>

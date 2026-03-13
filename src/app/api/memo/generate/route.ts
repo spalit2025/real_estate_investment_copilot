@@ -27,16 +27,7 @@ export interface GenerateMemoResponse {
 }
 
 export async function POST(request: NextRequest) {
-  // Check authentication
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   // Check if AI is configured
   if (!isAnthropicConfigured()) {
@@ -76,14 +67,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Deal not found' },
         { status: 404 }
-      );
-    }
-
-    // Check ownership
-    if (deal.userId !== user.id) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 403 }
       );
     }
 

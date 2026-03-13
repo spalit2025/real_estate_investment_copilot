@@ -23,20 +23,21 @@ export function Header() {
             <a href="#features" className="text-sm text-gray-300 hover:text-white transition-colors">
               Features
             </a>
-            <a href="#pricing" className="text-sm text-gray-300 hover:text-white transition-colors">
-              Pricing
-            </a>
             <a href="#faq" className="text-sm text-gray-300 hover:text-white transition-colors">
               FAQ
             </a>
-            <Link href="/login">
+            <a
+              href="https://github.com/spalit2025/re-investment-copilot"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-white/10">
-                Log In
+                GitHub
               </Button>
-            </Link>
-            <Link href="/signup">
+            </a>
+            <Link href="/deals/sample/analyze">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                Get Started
+                View Demo
               </Button>
             </Link>
           </div>
@@ -67,13 +68,6 @@ export function Header() {
                 Features
               </a>
               <a
-                href="#pricing"
-                className="text-sm text-gray-300 hover:text-white"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Pricing
-              </a>
-              <a
                 href="#faq"
                 className="text-sm text-gray-300 hover:text-white"
                 onClick={() => setMobileMenuOpen(false)}
@@ -81,14 +75,18 @@ export function Header() {
                 FAQ
               </a>
               <div className="flex flex-col gap-2 pt-4 border-t border-white/10">
-                <Link href="/login">
+                <a
+                  href="https://github.com/spalit2025/re-investment-copilot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button variant="ghost" className="w-full text-gray-300 hover:text-white hover:bg-white/10">
-                    Log In
+                    GitHub
                   </Button>
-                </Link>
-                <Link href="/signup">
+                </a>
+                <Link href="/deals/sample/analyze">
                   <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                    Get Started
+                    View Demo
                   </Button>
                 </Link>
               </div>

@@ -6,18 +6,13 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/db/server-client';
 import { getMarketTags } from '@/lib/db/deals';
+import { DEMO_USER_ID } from '@/config/defaults';
 
 export async function GET() {
   try {
     const supabase = await createServerClient();
 
-    // Get current user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const tags = await getMarketTags(supabase, user.id);
+    const tags = await getMarketTags(supabase, DEMO_USER_ID);
 
     return NextResponse.json({ tags });
   } catch (error) {

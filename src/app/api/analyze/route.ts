@@ -22,16 +22,7 @@ export interface AnalyzeResponse {
 }
 
 export async function POST(request: NextRequest) {
-  // Check authentication
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   // Get deal ID from request body
   let dealId: string;
@@ -60,14 +51,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Deal not found' },
         { status: 404 }
-      );
-    }
-
-    // Check ownership
-    if (deal.userId !== user.id) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 403 }
       );
     }
 

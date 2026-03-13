@@ -24,16 +24,7 @@ export interface CompareResponse {
 }
 
 export async function POST(request: NextRequest) {
-  // Check authentication
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   // Get deal IDs from request body
   let dealIds: string[];
@@ -72,14 +63,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           { success: false, error: `Deal ${dealId} not found` },
           { status: 404 }
-        );
-      }
-
-      // Check ownership
-      if (deal.userId !== user.id) {
-        return NextResponse.json(
-          { success: false, error: 'Unauthorized access to one or more deals' },
-          { status: 403 }
         );
       }
 

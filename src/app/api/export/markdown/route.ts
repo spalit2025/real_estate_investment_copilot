@@ -254,16 +254,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Check authentication
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   try {
     // Fetch deal
@@ -273,14 +264,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         { error: 'Deal not found' },
         { status: 404 }
-      );
-    }
-
-    // Check ownership
-    if (deal.userId !== user.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 403 }
       );
     }
 

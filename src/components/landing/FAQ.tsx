@@ -19,7 +19,7 @@ export function FAQ() {
     },
     {
       question: "Can I compare multiple properties?",
-      answer: "Yes, with an Unlimited subscription. Save deals to your account and view them side-by-side with key metrics: IRR, equity multiple, cash flow, and REIT comparison.",
+      answer: "Yes. Save deals and view them side-by-side using the comparison tool with key metrics: IRR, equity multiple, cash flow, and REIT comparison.",
     },
     {
       question: "What markets/property types are supported?",

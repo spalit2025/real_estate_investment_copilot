@@ -5,15 +5,8 @@
  */
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import type { User } from '@supabase/supabase-js';
-import { createBrowserClient } from '@/lib/db/client';
-import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-
-interface DashboardNavProps {
-  user: User;
-}
 
 const navItems = [
   { href: '/deals', label: 'Deals' },
@@ -21,16 +14,8 @@ const navItems = [
   { href: '/settings/profiles', label: 'Profiles' },
 ];
 
-export function DashboardNav({ user }: DashboardNavProps) {
+export function DashboardNav() {
   const pathname = usePathname();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    const supabase = createBrowserClient();
-    await supabase.auth.signOut();
-    router.push('/login');
-    router.refresh();
-  };
 
   return (
     <nav className="bg-white shadow">
@@ -38,7 +23,7 @@ export function DashboardNav({ user }: DashboardNavProps) {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/deals" className="text-xl font-bold text-gray-900">
+              <Link href="/" className="text-xl font-bold text-gray-900">
                 RE Copilot
               </Link>
             </div>
@@ -58,12 +43,6 @@ export function DashboardNav({ user }: DashboardNavProps) {
                 </Link>
               ))}
             </div>
-          </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-500">{user.email}</span>
-            <Button variant="outline" size="sm" onClick={handleSignOut}>
-              Sign out
-            </Button>
           </div>
         </div>
       </div>

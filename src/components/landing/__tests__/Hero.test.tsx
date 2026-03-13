@@ -22,20 +22,16 @@ describe('Hero', () => {
     expect(screen.getByText(/under 5 minutes/i)).toBeInTheDocument();
   });
 
-  it('renders primary CTA button', () => {
+  it('renders primary CTA button linking to sample analysis', () => {
     render(<Hero />);
-    expect(screen.getByText(/Analyze Your First Deal/i)).toBeInTheDocument();
+    expect(screen.getByText(/View Sample Analysis/i)).toBeInTheDocument();
+    const ctaButton = screen.getByText(/View Sample Analysis/i).closest('a');
+    expect(ctaButton).toHaveAttribute('href', '/deals/sample/analyze');
   });
 
-  it('CTA links to signup page', () => {
+  it('renders open source tagline', () => {
     render(<Hero />);
-    const ctaButton = screen.getByText(/Analyze Your First Deal/i).closest('a');
-    expect(ctaButton).toHaveAttribute('href', '/signup');
-  });
-
-  it('renders social proof text', () => {
-    render(<Hero />);
-    expect(screen.getByText(/127 deals analyzed this week/i)).toBeInTheDocument();
+    expect(screen.getByText(/Open source/i)).toBeInTheDocument();
   });
 
   it('renders floating metric badges', () => {

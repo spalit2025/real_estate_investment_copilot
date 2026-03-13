@@ -16,14 +16,6 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
 
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   try {
     const profile = await getProfile(supabase, id);
@@ -32,14 +24,6 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json(
         { error: 'Profile not found' },
         { status: 404 }
-      );
-    }
-
-    // Check ownership
-    if (profile.userId !== user.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 403 }
       );
     }
 
@@ -58,30 +42,15 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
 
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   try {
-    // First check ownership
+    // Check profile exists
     const existing = await getProfile(supabase, id);
 
     if (!existing) {
       return NextResponse.json(
         { error: 'Profile not found' },
         { status: 404 }
-      );
-    }
-
-    if (existing.userId !== user.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 403 }
       );
     }
 
@@ -109,30 +78,15 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
 
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   try {
-    // First check ownership
+    // Check profile exists
     const existing = await getProfile(supabase, id);
 
     if (!existing) {
       return NextResponse.json(
         { error: 'Profile not found' },
         { status: 404 }
-      );
-    }
-
-    if (existing.userId !== user.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 403 }
       );
     }
 

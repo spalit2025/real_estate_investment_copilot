@@ -6,22 +6,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/db/server-client';
 import { getProfiles, createProfile, PRESET_PROFILES } from '@/lib/db/profiles';
+import { DEMO_USER_ID } from '@/config/defaults';
 import type { GlobalAssumptions } from '@/types/deal';
 
 // GET - List all profiles for current user
 export async function GET() {
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   try {
-    const profiles = await getProfiles(supabase, user.id);
+    const profiles = await getProfiles(supabase, DEMO_USER_ID);
 
     return NextResponse.json({
       profiles,
@@ -39,14 +32,6 @@ export async function GET() {
 // POST - Create a new profile
 export async function POST(request: NextRequest) {
   const supabase = await createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
 
   try {
     const body = await request.json();
@@ -73,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     const profile = await createProfile(
       supabase,
-      user.id,
+      DEMO_USER_ID,
       profileName,
       profileAssumptions,
       isDefault ?? false

@@ -15,40 +15,9 @@ describe('Footer', () => {
     expect(screen.getByText('RE Investment Copilot')).toBeInTheDocument();
   });
 
-  it('renders contact email', () => {
+  it('renders GitHub link', () => {
     render(<Footer />);
-    expect(screen.getByText('support@reinvestmentcopilot.com')).toBeInTheDocument();
-  });
-
-  it('renders Product links', () => {
-    render(<Footer />);
-    expect(screen.getByText('Product')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Features' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Pricing' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'FAQ' })).toBeInTheDocument();
-  });
-
-  it('renders Resources links', () => {
-    render(<Footer />);
-    expect(screen.getByText('Resources')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Blog' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Deal Analysis Guide' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'IRR Calculator' })).toBeInTheDocument();
-  });
-
-  it('renders Company links', () => {
-    render(<Footer />);
-    expect(screen.getByText('Company')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Contact' })).toBeInTheDocument();
-  });
-
-  it('renders Legal links', () => {
-    render(<Footer />);
-    expect(screen.getByText('Legal')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Privacy Policy' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Terms of Service' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Disclaimer' })).toBeInTheDocument();
+    expect(screen.getByText('View on GitHub')).toBeInTheDocument();
   });
 
   it('renders disclaimer text', () => {
@@ -57,9 +26,9 @@ describe('Footer', () => {
     expect(screen.getByText(/not a licensed investment advisor/i)).toBeInTheDocument();
   });
 
-  it('renders copyright with current year', () => {
+  it('renders MIT license and copyright with current year', () => {
     render(<Footer />);
     const currentYear = new Date().getFullYear().toString();
-    expect(screen.getByText(new RegExp(currentYear))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`MIT License.*${currentYear}`))).toBeInTheDocument();
   });
 });

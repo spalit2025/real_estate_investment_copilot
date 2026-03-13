@@ -29,16 +29,16 @@ export function Hero() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Link href="/signup">
+              <Link href="/deals/sample/analyze">
                 <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-6 shadow-lg shadow-blue-600/25">
-                  Analyze Your First Deal — Free
+                  View Sample Analysis
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
 
             <p className="mt-6 text-sm text-gray-400">
-              127 deals analyzed this week by investors like you
+              Open source. No sign-up required.
             </p>
           </div>
 
