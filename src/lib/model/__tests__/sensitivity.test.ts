@@ -60,6 +60,7 @@ const testAssumptions: GlobalAssumptions = {
   landValuePct: 0.20,
   capitalGainsRate: 0.15,
   deprecationRecaptureRate: 0.25,
+  passiveLossUsable: true,
 };
 
 describe('runSensitivityAnalysis', () => {

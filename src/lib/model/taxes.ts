@@ -83,19 +83,27 @@ export function calculateTaxableIncome(
 /**
  * Calculate income tax on rental property income
  *
- * When taxable income is negative, the result is a tax benefit (credit).
- * This assumes passive loss limitations don't apply (income under threshold).
+ * When passive losses are usable and taxable income is negative,
+ * the result is a tax benefit (credit) that offsets other income.
+ * When passive losses are NOT usable, negative taxable income
+ * produces no tax effect (losses are carried forward, not modeled).
  *
  * @param taxableIncome - Taxable income from rental (can be negative)
  * @param combinedTaxRate - Combined federal + state marginal rate
+ * @param passiveLossUsable - Whether passive losses can offset other income
  * @returns Income tax amount (negative = tax benefit)
  */
 export function calculateIncomeTax(
   taxableIncome: number,
-  combinedTaxRate: number
+  combinedTaxRate: number,
+  passiveLossUsable: boolean = true
 ): number {
   if (combinedTaxRate < 0 || combinedTaxRate > 1) {
     throw new Error('Tax rate must be between 0 and 1');
+  }
+
+  if (!passiveLossUsable && taxableIncome < 0) {
+    return 0;
   }
 
   return taxableIncome * combinedTaxRate;
