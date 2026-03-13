@@ -48,6 +48,7 @@ export * from './irr';
 export * from './cashflow';
 export * from './taxes';
 export * from './sensitivity';
+export * from './scoring';
 
 /**
  * Run complete financial model for a deal
@@ -103,6 +104,9 @@ export function runModel(
   // Combined tax rate
   const combinedTaxRate = getCombinedTaxRate(assumptions);
 
+  // Passive loss: deal override takes precedence over global assumption
+  const passiveLossUsable = deal.passiveLossOverride ?? assumptions.passiveLossUsable;
+
   // Calculate year-by-year results (years 1-10)
   const resultsByYear: YearResult[] = [];
 
@@ -125,7 +129,7 @@ export function runModel(
     const interestPaid = getInterestForYear(amortizationSchedule, year);
     const principalPaid = getPrincipalForYear(amortizationSchedule, year);
     const taxableIncome = calculateTaxableIncome(noi, annualDepreciation, interestPaid);
-    const incomeTax = calculateIncomeTax(taxableIncome, combinedTaxRate);
+    const incomeTax = calculateIncomeTax(taxableIncome, combinedTaxRate, passiveLossUsable);
     const cashFlowAfterTax = calculateCashFlowAfterTax(cashFlowBeforeTax, incomeTax);
 
     // Balance sheet
@@ -319,6 +323,7 @@ function runModelForIRR(
   );
 
   const combinedTaxRate = getCombinedTaxRate(assumptions);
+  const passiveLossUsable = deal.passiveLossOverride ?? assumptions.passiveLossUsable;
 
   // Calculate cash flows for each year
   const annualCashFlows: number[] = [];
@@ -330,7 +335,7 @@ function runModelForIRR(
     const cfbt = calculateCashFlowBeforeTax(noi, annualDebtService);
     const interestPaid = getInterestForYear(amortizationSchedule, year);
     const taxableIncome = calculateTaxableIncome(noi, annualDepreciation, interestPaid);
-    const incomeTax = calculateIncomeTax(taxableIncome, combinedTaxRate);
+    const incomeTax = calculateIncomeTax(taxableIncome, combinedTaxRate, passiveLossUsable);
     const cfat = calculateCashFlowAfterTax(cfbt, incomeTax);
     annualCashFlows.push(cfat);
   }

@@ -72,10 +72,27 @@ describe('calculateIncomeTax', () => {
     expect(tax).toBe(1950);
   });
 
-  it('should calculate tax benefit on negative income', () => {
-    // Taxable income: -10000 (paper loss)
-    const tax = calculateIncomeTax(-10000, 0.39);
+  it('should calculate tax benefit on negative income when passive loss usable', () => {
+    // Taxable income: -10000 (paper loss), passive loss usable (default)
+    const tax = calculateIncomeTax(-10000, 0.39, true);
     expect(tax).toBe(-3900); // Tax benefit
+  });
+
+  it('should return zero tax on negative income when passive loss not usable', () => {
+    // Taxable income: -10000 (paper loss), passive loss NOT usable
+    const tax = calculateIncomeTax(-10000, 0.39, false);
+    expect(tax).toBe(0); // No tax benefit, loss carried forward
+  });
+
+  it('should still tax positive income when passive loss not usable', () => {
+    const tax = calculateIncomeTax(5000, 0.39, false);
+    expect(tax).toBe(1950); // Positive income always taxed
+  });
+
+  it('should default to passive loss usable when param omitted', () => {
+    // Backward compatibility: omitting param behaves like true
+    const tax = calculateIncomeTax(-10000, 0.39);
+    expect(tax).toBe(-3900);
   });
 
   it('should throw for invalid tax rate', () => {
@@ -217,6 +234,7 @@ describe('getCombinedTaxRate', () => {
       landValuePct: 0.20,
       capitalGainsRate: 0.15,
       deprecationRecaptureRate: 0.25,
+      passiveLossUsable: true,
     };
 
     const rate = getCombinedTaxRate(assumptions);
